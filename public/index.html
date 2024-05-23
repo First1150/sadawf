@@ -33,13 +33,13 @@
       const message = messageInput.value;
       if (message.trim() !== '') {
         appendMessage('You', message);
-        socket.emit('chat message', message);
+        socket.emit('chat message', { sender: 'You', message: message }); // ส่งข้อความไปยังเซิร์ฟเวอร์
         messageInput.value = '';
       }
     });
 
     socket.on('chat message', (data) => {
-      appendMessage(data.sender, data.message);
+      appendMessage(data.sender, data.message); // แสดงข้อความที่รับมาจากเซิร์ฟเวอร์
     });
 
     function appendMessage(sender, message) {

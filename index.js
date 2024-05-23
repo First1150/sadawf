@@ -13,13 +13,13 @@ app.use(express.static('public'));
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-  // Handle messages from clients
-  socket.on('move', (data) => {
-    console.log('Move received:', data);
-    // Broadcast the move to other clients
-    socket.broadcast.emit('move', data);
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
   });
 
+  socket.on('chat message', (data) => {
+    io.emit('chat message', data);  
+  });
   socket.on('disconnect', () => {
     console.log('A user disconnected');
   });
